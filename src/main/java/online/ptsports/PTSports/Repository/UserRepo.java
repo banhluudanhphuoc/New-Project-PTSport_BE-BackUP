@@ -8,4 +8,6 @@ public interface UserRepo extends JpaRepository<User,Integer> {
     User findByEmail(String email);
 
     boolean existsByEmail(String email);
+
+    User findByEmailVerificationToken(String token);
 }

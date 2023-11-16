@@ -41,41 +41,79 @@ public class PtSportsApplication implements CommandLineRunner {
 
 
 
-	@Override
-	public void run(String... args) throws Exception {
-		log.info("BEGIN INSERT ROLE DUMP");
-		try {
-			Role adminRole = new Role();
-			adminRole.setRoleId(AppConstants.ADMIN_ID);
-
-			adminRole.setRoleName("ROLE_ADMIN");
-
-			Role userRole = new Role();
-			userRole.setRoleId(AppConstants.USER_ID);
-			userRole.setRoleName("ROLE_USER");
-
-
-			List<Role> roles = List.of(adminRole, userRole);
-
-			List<Role> savedRoles = roleRepo.saveAll(roles);
-
-
-			savedRoles.forEach(System.out::println);
-			User user = new User();
-			user.setPassword(new BCryptPasswordEncoder().encode("123456"));
-			user.setName("SYS ADMIN");
-			user.setEmail("phuocbld2@gmail.com");
-			user.setAvatar("default.png");
-			user.setBirthdate(new Date());
-
-			user.setRoles(Arrays.asList(adminRole));
-
-			userRepo.save(user);
-
-		} catch (Exception e) {
-			e.printStackTrace();
+//	@Override
+//	public void run(String... args) throws Exception {
+//		log.info("BEGIN INSERT ROLE DUMP");
+//		try {
+//			Role adminRole = new Role();
+//			adminRole.setRoleId(AppConstants.ADMIN_ID);
+//
+//			adminRole.setRoleName("ROLE_ADMIN");
+//
+//			Role userRole = new Role();
+//			userRole.setRoleId(AppConstants.USER_ID);
+//			userRole.setRoleName("ROLE_USER");
+//
+//
+//			List<Role> roles = List.of(adminRole, userRole);
+//
+//			List<Role> savedRoles = roleRepo.saveAll(roles);
+//
+//
+//			savedRoles.forEach(System.out::println);
+//			User user = new User();
+//			user.setPassword(new BCryptPasswordEncoder().encode("123456"));
+//			user.setName("SYS ADMIN");
+//			user.setEmail("phuocbld2@gmail.com");
+//			user.setAvatar("default.png");
+//			user.setBirthdate(new Date());
+//
+//			user.setRoles(Arrays.asList(adminRole));
+//
+//			userRepo.save(user);
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
+@Override
+public void run(String... args) throws Exception {
+	log.info("BEGIN INSERT ROLE DUMP");
+	try {
+		// Kiểm tra xem đã có tài khoản Admin chưa
+		if (userRepo.existsByEmail("phuocbld2@gmail.com")) {
+			log.info("Admin account already exists. Skipping data initialization.");
+			return;
 		}
+
+		Role adminRole = new Role();
+		adminRole.setRoleId(AppConstants.ADMIN_ID);
+		adminRole.setRoleName("ROLE_ADMIN");
+
+		Role userRole = new Role();
+		userRole.setRoleId(AppConstants.USER_ID);
+		userRole.setRoleName("ROLE_USER");
+
+		List<Role> roles = List.of(adminRole, userRole);
+		List<Role> savedRoles = roleRepo.saveAll(roles);
+
+		savedRoles.forEach(System.out::println);
+
+		User user = new User();
+		user.setPassword(new BCryptPasswordEncoder().encode("123456"));
+		user.setName("SYS ADMIN");
+		user.setEmail("phuocbld2@gmail.com");
+		user.setAvatar("default.png");
+		user.setBirthdate(new Date());
+		user.setRoles(Arrays.asList(adminRole));
+
+		userRepo.save(user);
+
+	} catch (Exception e) {
+		e.printStackTrace();
 	}
+}
+
 }
 
 

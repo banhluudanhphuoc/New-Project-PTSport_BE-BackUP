@@ -24,6 +24,13 @@ public class User extends TimeAuditable implements Serializable {
     private String avatar;
     private String email;
     private String password;
+
+    @Column(name = "email_verification_token")
+    private String emailVerificationToken;
+
+    @Column(name = "is_active")
+    private Boolean isActive;
+
     @Temporal(TemporalType.DATE)
     private Date birthdate;
 
@@ -33,11 +40,6 @@ public class User extends TimeAuditable implements Serializable {
     @ManyToMany( fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles ;
-
-
-
-
-
 
 
 }

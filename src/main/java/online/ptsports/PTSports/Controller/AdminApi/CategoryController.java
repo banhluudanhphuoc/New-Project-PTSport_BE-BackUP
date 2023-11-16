@@ -2,7 +2,7 @@ package online.ptsports.PTSports.Controller.AdminApi;
 
 
 
-import online.ptsports.PTSports.DTO.ApiResponse;
+import online.ptsports.PTSports.DTO.Response.ApiResponse;
 import online.ptsports.PTSports.DTO.CategoryDto;
 import online.ptsports.PTSports.Entity.Category;
 import online.ptsports.PTSports.Service.CategoryService;

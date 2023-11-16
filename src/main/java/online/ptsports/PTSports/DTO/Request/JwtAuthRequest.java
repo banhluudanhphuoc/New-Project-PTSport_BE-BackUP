@@ -1,4 +1,4 @@
-package online.ptsports.PTSports.DTO;
+package online.ptsports.PTSports.DTO.Request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -3,8 +3,8 @@ package online.ptsports.PTSports.Exeption;
 
 import io.jsonwebtoken.MalformedJwtException;
 import lombok.extern.slf4j.Slf4j;
-import online.ptsports.PTSports.DTO.ApiError;
-import online.ptsports.PTSports.DTO.ApiResponse;
+import online.ptsports.PTSports.DTO.Response.ApiError;
+import online.ptsports.PTSports.DTO.Response.ApiResponse;
 import online.ptsports.PTSports.DTO.ResponseDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -2,6 +2,7 @@ package online.ptsports.PTSports.Service.IMPL;
 
 
 import online.ptsports.PTSports.DTO.PageDto;
+import online.ptsports.PTSports.DTO.Response.ApiResponse;
 import online.ptsports.PTSports.DTO.UserDto;
 import online.ptsports.PTSports.Entity.Role;
 import online.ptsports.PTSports.Entity.User;
@@ -9,6 +10,7 @@ import online.ptsports.PTSports.Exeption.ConflictException;
 import online.ptsports.PTSports.Exeption.ResoureNotFoundException;
 import online.ptsports.PTSports.Repository.RoleRepo;
 import online.ptsports.PTSports.Repository.UserRepo;
+import online.ptsports.PTSports.Service.EmailService;
 import online.ptsports.PTSports.Service.UserService;
 import online.ptsports.PTSports.Config.AppConstants;
 import org.modelmapper.ModelMapper;
@@ -23,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,6 +39,10 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private EmailService emailService;
+
 
     @Override
     @Transactional
@@ -104,6 +111,8 @@ public class UserServiceImpl implements UserService {
 
         }
 
+
+
         User user = modelMapper.map(userDto, User.class);
 
         Role role = roleRepo.findById(AppConstants.USER_ID).get();
@@ -116,10 +125,25 @@ public class UserServiceImpl implements UserService {
         User registeredUser = userRepo.save(user);
 
 
+        // Tạo mã xác thực email
+        String emailVerificationToken = UUID.randomUUID().toString();
+
+        // Gửi email xác thực
+        String verificationLink = "http://localhost:3000/verify-email?token=" + emailVerificationToken;
+        emailService.sendEmail(user.getEmail(), "Xác thực email", "Nhấn vào liên kết sau để xác thực email: " + verificationLink);
+
+        // Lưu emailVerificationToken và đánh dấu user chưa xác thực
+        user.setEmailVerificationToken(emailVerificationToken);
+        user.setIsActive(false); // Chưa xác thực
+        userRepo.save(user);
+
+        ApiResponse response = new ApiResponse();
+        response.setMessage("Đăng ký thành công. Vui lòng kiểm tra email để xác thực.");
+        response.setSuccess(true);
+
         userDto = modelMapper.map(registeredUser, UserDto.class);
 
         return userDto;
-
     }
 
     @Transactional

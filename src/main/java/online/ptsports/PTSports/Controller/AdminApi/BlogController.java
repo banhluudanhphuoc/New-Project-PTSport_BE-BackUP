@@ -1,7 +1,7 @@
 package online.ptsports.PTSports.Controller.AdminApi;
 
 
-import online.ptsports.PTSports.DTO.ApiResponse;
+import online.ptsports.PTSports.DTO.Response.ApiResponse;
 import online.ptsports.PTSports.DTO.BlogDto;
 import online.ptsports.PTSports.Service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;

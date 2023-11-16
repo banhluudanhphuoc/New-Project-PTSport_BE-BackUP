@@ -3,7 +3,7 @@ package online.ptsports.PTSports.Controller.AdminApi;
 
 import com.cloudinary.Cloudinary;
 
-import online.ptsports.PTSports.DTO.ApiResponse;
+import online.ptsports.PTSports.DTO.Response.ApiResponse;
 import online.ptsports.PTSports.DTO.PageDto;
 import online.ptsports.PTSports.DTO.ResponseDTO;
 import online.ptsports.PTSports.DTO.UserDto;
